@@ -18,7 +18,7 @@ b3e.tree.BlockManager = function(editor, project, tree) {
   /**
    * Add a block.
    */
-  this.add = function(name, x, y) {
+  this.add = function(name, x, y, title=null) {
     // If name is a block
     var block;
 
@@ -37,6 +37,15 @@ b3e.tree.BlockManager = function(editor, project, tree) {
       var node = name;
       if (typeof name === 'string') {
         node = project.nodes.get(name);
+      }
+
+      if (!node) {
+        // @dbotha - fix for not being able to parse tree reference nodes
+        node = {
+          name     : name,
+          title    : title,
+          category : 'tree',
+        };
       }
 
       block = new b3e.Block(node);
